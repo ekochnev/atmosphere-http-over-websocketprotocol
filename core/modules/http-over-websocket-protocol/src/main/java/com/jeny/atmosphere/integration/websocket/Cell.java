@@ -17,4 +17,23 @@
 package com.jeny.atmosphere.integration.websocket;
 
 public class Cell {
+
+    private int cell;
+    private String turn;
+
+    public int getCell() {
+        return cell;
+    }
+
+    public void setCell(int cell) {
+        this.cell = cell;
+    }
+
+    public String getTurn() {
+        return turn;
+    }
+
+    public void setTurn(String turn) {
+        this.turn = turn;
+    }
 }

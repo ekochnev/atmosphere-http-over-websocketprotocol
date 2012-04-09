@@ -214,7 +214,7 @@
 
                 var turnUrl = baseUrl + "/turn/2";
 
-                var cell = { cell : 2 turn: ''};
+                var cell = { cell : 2, turn: 'X'};
 
                 var jsonHttpRequest = $.http.GET()
                     .Host(window.location.host)
