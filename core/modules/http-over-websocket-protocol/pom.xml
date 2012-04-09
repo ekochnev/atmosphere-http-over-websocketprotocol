@@ -14,23 +14,6 @@
     <packaging>war</packaging>
     <name>http-over-websocket-protocol</name>
 
-    <properties>
-        <atmosphere.version>0.9.0.RC3</atmosphere.version>
-        <!--<atmosphere.version>0.9.0.RC2</atmosphere.version>-->
-        <!--<atmosphere.version>0.9-SNAPSHOT</atmosphere.version>-->
-        <!--<atmosphere.version>0.9.0-SNAPSHOT</atmosphere.version>-->
-        <!--<atmosphere.version>0.8.6</atmosphere.version>-->
-        <!--<atmosphere.version>0.8.6-SNAPSHOT</atmosphere.version>-->
-        <javaee.version>6.0</javaee.version>        
-        <logback.version>0.9.30</logback.version>
-        <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
-        <maven-war-plugin.version>2.1.1</maven-war-plugin.version>
-        <jetty.version>8.1.2.v20120308</jetty.version>
-        <jersey.version>1.10</jersey.version>
-        <!--<jetty.version>7.5.4.v20111024</jetty.version>-->
-        <ahc.version>1.7.1</ahc.version>
-    </properties>
-
     <dependencies>
 
         <!-- Atmosphere -->
