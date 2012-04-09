@@ -5,7 +5,6 @@
     <link rel="stylesheet" type="text/css" href="resources/tictactoe.css">
 
     <script type="text/javascript" src="jquery/jquery-1.6.4.js"></script>
-    <script type="text/javascript" src="jquery/jquery.form.js"></script>
     <script type="text/javascript" src="jquery/jquery.atmosphere.js"></script>
     <script type="text/javascript" src="jquery/jquery.cookie.js"></script>
     <script type="text/javascript" src="jquery/jquery.http.js"></script>
@@ -181,9 +180,9 @@
                 var rawHttpRequest = $.http.GET()
                     .Host(window.location.host)
                     .Url(turnUrl)
-                    .addHeader('Accept', 'text/plain')
-                    .addHeader('Accept-Charset', 'utf-8')
-                    .addHeader('Cache-Control', 'no-cache').buildRAW();
+                    .setHeader('Accept', 'text/plain')
+                    .setHeader('Accept-Charset', 'utf-8')
+                    .setHeader('Cache-Control', 'no-cache').buildRAW();
 
                 // use GET
                 //connectedEndpoint.push($.atmosphere.request = {data: 'cell=' + 0, method: 'GET', url: turnUrl});
@@ -220,11 +219,11 @@
                 var jsonHttpRequest = $.http.GET()
                     .Host(window.location.host)
                     .Url(turnUrl)
-                    .addHeader('Accept', 'text/plain')
-                    .addHeader('Accept-Charset', 'utf-8')
-                    .addHeader('Cache-Control', 'no-cache')
+                    .setHeader('Accept', 'text/plain')
+                    .setHeader('Accept-Charset', 'utf-8')
+                    .setHeader('Cache-Control', 'no-cache')
                     //.addBody("cell=2").buildJSON();
-                    .addBody(cell).buildJSON();
+                    .setBody(cell).buildJSON();
 
                 //alert(jsonHttpRequest);
                 connectedEndpoint.push($.atmosphere.request = {data: jsonHttpRequest, method: 'GET', url: turnUrl, webSocketUrl : turnUrl});
