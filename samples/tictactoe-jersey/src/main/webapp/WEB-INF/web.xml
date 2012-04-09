@@ -28,12 +28,12 @@
         </init-param>
         <init-param>
             <param-name>org.atmosphere.cpr.broadcastFilterClasses</param-name>
-            <param-value>org.atmosphere.tictactoe42a9x.PersonalPerRequestBroadcastFilter</param-value>
+            <param-value>org.atmosphere.tictactoe.PersonalPerRequestBroadcastFilter</param-value>
         </init-param>
         <init-param>
             <param-name>org.atmosphere.websocket.WebSocketProtocol</param-name>
-            <param-value>org.atmosphere.tictactoe42a9x.RawWebSocketProtocol</param-value>
-            <!--<param-value>org.atmosphere.tictactoe42a9x.JsonWebSocketProtocol</param-value>-->
+            <param-value>com.jeny.atmosphere.integration.websocket.RawWebSocketProtocol</param-value>
+            <!--<param-value>com.jeny.atmosphere.integration.websocket.JsonWebSocketProtocol</param-value>-->
         </init-param>
 
         <load-on-startup>0</load-on-startup>
