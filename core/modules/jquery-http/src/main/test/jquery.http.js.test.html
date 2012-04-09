@@ -5,7 +5,6 @@
     <link rel="stylesheet" type="text/css" href="resources/tictactoe.css">
 
     <script type="text/javascript" src="../webapp/jquery/jquery-1.6.4.js"></script>
-    <script type="text/javascript" src="../webapp/jquery/jquery.form.js"></script>
     <script type="text/javascript" src="../webapp/jquery/jquery.atmosphere.js"></script>
     <script type="text/javascript" src="../webapp/jquery/jquery.cookie.js"></script>
     <script type="text/javascript" src="../webapp/jquery/jquery.http.js"></script>
@@ -16,10 +15,10 @@
         $(document).ready(function() {
 
             var rawHttpRequest = $.http.GET()
-                    .setUrl(document.location)
-                    .addHeader('Accept', 'text/plain')
-                    .addHeader('Accept-Charset', 'utf-8')
-                    .addHeader('Cache-Control', 'no-cache').RAW();
+                    .Url(document.location)
+                    .setHeader('Accept', 'text/plain')
+                    .setHeader('Accept-Charset', 'utf-8')
+                    .setHeader('Cache-Control', 'no-cache').buildRAW();
             alert(rawHttpRequest);
         });
     </script>
