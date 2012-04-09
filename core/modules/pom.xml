@@ -50,7 +50,8 @@
     </build>
 
     <modules>
-        <module>httpoverwebsocketprotocol</module>
+        <module>http-over-websocket-protocol</module>
+        <module>jquery-http</module>
     </modules>
 
     <repositories>
