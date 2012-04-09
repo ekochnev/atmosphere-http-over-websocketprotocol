@@ -13,7 +13,7 @@
 * License for the specific language governing permissions and limitations under
 * the License.
 */
-package org.atmosphere.tictactoe42a9x;
+package com.jeny.atmosphere.integration.websocket;
 
 import com.google.gson.Gson;
 import org.atmosphere.cpr.*;

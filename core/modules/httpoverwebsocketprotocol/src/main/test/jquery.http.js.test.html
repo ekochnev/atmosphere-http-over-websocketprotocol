@@ -1,0 +1,28 @@
+<html>
+<head>
+    <title>Tic Tac Toe Example 1</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="resources/tictactoe.css">
+
+    <script type="text/javascript" src="jquery/jquery-1.6.4.js"></script>
+    <script type="text/javascript" src="jquery/jquery.form.js"></script>
+    <script type="text/javascript" src="jquery/jquery.atmosphere.js"></script>
+    <script type="text/javascript" src="jquery/jquery.cookie.js"></script>
+    <script type="text/javascript" src="jquery/jquery.http.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+
+            var rawHttpRequest = $.http.GET()
+                    .Url(document.location)
+                    .addHeader('Accept', 'text/plain')
+                    .addHeader('Accept-Charset', 'utf-8')
+                    .addHeader('Cache-Control', 'no-cache').RAW();
+            alert(rawHttpRequest);
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>
