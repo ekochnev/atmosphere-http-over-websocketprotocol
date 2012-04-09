@@ -9,9 +9,9 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.jeny.atmosphere</groupId>
-    <artifactId>jquey-http</artifactId>
+    <artifactId>jquery-http</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
-    <name>jquey-http</name>
+    <name>jquery-http</name>
 
 </project>
