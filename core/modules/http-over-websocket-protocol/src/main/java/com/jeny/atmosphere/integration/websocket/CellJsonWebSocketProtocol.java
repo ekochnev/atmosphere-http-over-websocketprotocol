@@ -36,9 +36,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
+/**
+ * NOTE: It is just prototype.
+ */
+public class CellJsonWebSocketProtocol implements WebSocketProtocol, Serializable {
 
-    private static final Logger logger = LoggerFactory.getLogger(JsonWebSocketProtocol.class);
+    private static final Logger logger = LoggerFactory.getLogger(CellJsonWebSocketProtocol.class);
 
     private String contentType;
     private String methodType;
@@ -85,8 +88,8 @@ public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
         // ######################
 
         Gson gson = new Gson();
-        BaseJsonHttpServletRequest jsonHttpServletRequest = gson.fromJson(d, BaseJsonHttpServletRequest.class);
-        String body = jsonHttpServletRequest.getBody();
+        CellJsonHttpServletRequest jsonHttpServletRequest = gson.fromJson(d, CellJsonHttpServletRequest.class);
+        Cell body = jsonHttpServletRequest.getBody();
 
         AtmosphereResourceImpl resource = (AtmosphereResourceImpl) webSocket.resource();
         if (resource == null) {
@@ -136,7 +139,7 @@ public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
                 .headers(headersMap)
                 .queryStrings(queryStrings)
 
-                .body(body)
+                .body(gson.toJson(body))
                 .destroyable(destroyable)
                 .build();
 

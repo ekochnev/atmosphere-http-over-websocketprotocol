@@ -16,6 +16,9 @@
 
 package com.jeny.atmosphere.integration.websocket;
 
+/**
+ * NOTE: It is just prototype.
+ */
 public class CellJsonHttpServletRequest extends AbstractJsonHttpServletRequest {
 
     private Cell body;

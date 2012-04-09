@@ -33,7 +33,8 @@
         <init-param>
             <param-name>org.atmosphere.websocket.WebSocketProtocol</param-name>
             <!--<param-value>com.jeny.atmosphere.integration.websocket.RawWebSocketProtocol</param-value>-->
-            <param-value>com.jeny.atmosphere.integration.websocket.JsonWebSocketProtocol</param-value>
+            <!--<param-value>com.jeny.atmosphere.integration.websocket.JsonWebSocketProtocol</param-value>-->
+            <param-value>com.jeny.atmosphere.integration.websocket.CellJsonWebSocketProtocol</param-value>
         </init-param>
 
         <load-on-startup>0</load-on-startup>
