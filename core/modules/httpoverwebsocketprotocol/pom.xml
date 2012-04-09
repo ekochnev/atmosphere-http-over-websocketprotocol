@@ -1,16 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-
-<parent>
-        
-<groupId>com.jeny.atmosphere</groupId>
-        
-<artifactId>atmosphere-integration-project</artifactId>
-        
-<version>0.0.1-SNAPSHOT</version>
-    
-</parent>
+    <parent>
+        <groupId>com.jeny.atmosphere</groupId>
+        <artifactId>atmosphere-integration-project</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.jeny.atmosphere</groupId>
@@ -35,23 +30,6 @@
         <!--<jetty.version>7.5.4.v20111024</jetty.version>-->
         <ahc.version>1.7.1</ahc.version>
     </properties>
-
-    <!--<repositories>-->
-         <!--<repository>-->
-            <!--<id>oss.sonatype.org</id>-->
-            <!--<url>http://oss.sonatype.org/content/repositories/releases</url>-->
-        <!--</repository>-->
-        <!--<repository>-->
-            <!--<id>oss.sonatype.org-snapshot</id>-->
-            <!--<url>http://oss.sonatype.org/content/repositories/snapshots</url>-->
-        <!--</repository>-->
-        <!--<repository>-->
-            <!--<id>snapshot-repository.java.net</id>-->
-            <!--<name>Java.net Snapshot Repository for Maven</name>-->
-            <!--<url>https://maven.java.net/content/repositories/snapshots/</url>-->
-            <!--<layout>default</layout>-->
-        <!--</repository>-->
-    <!--</repositories>-->
 
     <dependencies>
 
@@ -109,24 +87,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.atmosphere</groupId>
-            <artifactId>atmosphere-jersey</artifactId>
-            <version>${atmosphere.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-json</artifactId>
-            <version>${jersey.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ning</groupId>
-            <artifactId>async-http-client</artifactId>
-            <version>${ahc.version}</version>
-        </dependency>
-
         <!--<dependency>-->
             <!--<groupId>org.apache.httpcomponents</groupId>-->
             <!--<artifactId>httpcore</artifactId>-->
@@ -161,17 +121,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>${maven-war-plugin.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>${jetty.version}</version>
-                <configuration>
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
-                    <webAppConfig>
-                        <contextPath>/tictactoe</contextPath>
-                    </webAppConfig>
-                </configuration>
             </plugin>
         </plugins>
     </build>
