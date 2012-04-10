@@ -1,1 +1,17 @@
-This file was created by IntelliJ IDEA 10.5.4 for binding GitHub repository
+
+The main idea of this project is:
+
+Since there are not any standards how to use Web Socket in exist Java Web Frameworks still
+I got an idea to propagate http request over web socket to have a ability to integrate it
+with exist web frameworks based on http interaction.
+Especially this project implements integration for the Atmosphere Framework with REST (Jersey).
+
+Now there are two implementation of the WebSocketProtocol:
+
+1. The JsonWebSocketProtocol - which uses JSON for pass http request via Web Socket body.
+
+2. The RawWebSocketProtocol - which uses RAW format of http request by HTTP standards via Web Socket body.
+(Under developing and testing still)
+
+Also there is the jquery.http.js to form http request on the client side.
+Probably I will move it as separate project.
