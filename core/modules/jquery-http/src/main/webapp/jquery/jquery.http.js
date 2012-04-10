@@ -14,6 +14,13 @@
 * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 * License for the specific language governing permissions and limitations under
 * the License.
+*
+* Since the Web Socket technology becomes more popular but there are not any standards
+* for java web framework yet how to work with Web Socket I got an idea to propagate
+* http request over web socket to have a ability to integrate it with exist web frameworks
+* based on http interaction.
+* Since I have not found any java script which do it
+* I decided to create own for it.
 */
 jQuery.http = function() {
 
