@@ -20,7 +20,6 @@ import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.logging.Logger;
 
 @Produces("text/html;charset=ISO-8859-1")
 @PerSession
