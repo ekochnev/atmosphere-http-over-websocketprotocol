@@ -19,6 +19,10 @@ package com.jeny.atmosphere.integration.websocket;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This abstract class represents JSON view of http request.
+ * And uses as TDO object to propagate http request.
+ */
 public abstract class AbstractJsonHttpServletRequest {
 
     private String url;

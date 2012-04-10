@@ -28,6 +28,10 @@ import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
 
+/**
+ * Used HttpServletRequestWrapper to propagate passed http request parameters, headers, cookies and etc.
+ * If some parameters (headers, cookies and etc) takes from initial request if they are missing.
+ */
 public class HttpServletRequestWrapper implements HttpServletRequest {
 
     private HttpServletRequest initHttpServletRequest;
