@@ -25,24 +25,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.UriBuilder;
-import java.io.ByteArrayInputStream;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This is simple implementation of WebSocketProtocol.
+ * The protocol is simple http tunneling over web socket using JSON approach.
+ * (JSON means that http request passed in JSON format)
+ *
+ * @author Evgeny Kochnev
+ */
 public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(JsonWebSocketProtocol.class);
 
     private String contentType;
     private String methodType;
-    private String delimiter = "@@";
+    private String delimiter;
     private boolean destroyable;
 
     /**
@@ -64,7 +67,7 @@ public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
 
         String delimiter = config.getInitParameter(ApplicationConfig.WEBSOCKET_PATH_DELIMITER);
         if (delimiter == null) {
-            delimiter = "@@";
+            delimiter = "";
         }
         this.delimiter = delimiter;
 
@@ -77,16 +80,19 @@ public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
     }
 
     /**
+     * Since protocol is simple http tunneling over web socket using JSON approach it parses web socket body as json object which represents http request.
+     * It takes all parameters from passed http request and takes some parameters (like Cookies, Content Type and etc) from initial http request if
+     * they are missing in the passed http request. On the client side is supposed that it will take passed parameters and missing parameters from
+     * browser context during form http request (like Accept-Charset, Accept-Encoding, User-Agent and etc).
      * {@inheritDoc}
      */
     @Override
     public List<AtmosphereRequest> onMessage(WebSocket webSocket, String d) {
 
-        // ######################
+        // Convert http request from JSON to object
 
         Gson gson = new Gson();
         BaseJsonHttpServletRequest jsonHttpServletRequest = gson.fromJson(d, BaseJsonHttpServletRequest.class);
-        String body = jsonHttpServletRequest.getBody();
 
         AtmosphereResourceImpl resource = (AtmosphereResourceImpl) webSocket.resource();
         if (resource == null) {
@@ -95,34 +101,41 @@ public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
         }
         AtmosphereRequest initialRequest = resource.getRequest();
 
-        // ######################
         Map<String,Object> attributesMap = new HashMap<String, Object>();
         attributesMap.put(FrameworkConfig.WEBSOCKET_SUBPROTOCOL, FrameworkConfig.SIMPLE_HTTP_OVER_WEBSOCKET);
 
-        // Propagate the original attribute to WebSocket message.
+        // Propagate original attributes of initial http request.
         attributesMap.putAll(initialRequest.attributes());
+        // Propagate new attributes which passed by http request
         attributesMap.putAll(jsonHttpServletRequest.getAttributes());
 
+        // Propagate new headers which passed by http request
         Map<String, String> headersMap  = new HashMap<String, String>();
         headersMap.putAll(jsonHttpServletRequest.getHeaders());
 
+        // Propagate new query strings which passed by http request
         Map<String, String[]> queryStrings = new HashMap<String, String[]>();
         for (String key : jsonHttpServletRequest.getParameters().keySet()) {
             queryStrings.put(key, new String[]{jsonHttpServletRequest.getParameters().get(key)});
         }
 
-        // ######################
+        // Determine value of path info, request URI
         String pathInfo = jsonHttpServletRequest.getUrl();
         UriBuilder pathInfoUriBuilder = UriBuilder.fromUri(pathInfo);
         URI pathInfoUri = pathInfoUriBuilder.build();
         String requestURI = pathInfoUri.getPath();
 
+        // take the Method Type of passed http request
         methodType = jsonHttpServletRequest.getMethod();
+
+        // take the Content Type of passed http request
         contentType = jsonHttpServletRequest.getHeader(HttpHeaders.CONTENT_TYPE) != null ?
                 jsonHttpServletRequest.getHeader(HttpHeaders.CONTENT_TYPE) :
                 initialRequest.getContentType();
 
-        // ######################
+        // take the body of passed http request
+        String body = jsonHttpServletRequest.getBody();
+
         // We need to create a new AtmosphereRequest as WebSocket message may arrive concurrently on the same connection.
         AtmosphereRequest atmosphereRequest = new AtmosphereRequest.Builder()
                 .request(initialRequest)
@@ -195,14 +208,13 @@ public class JsonWebSocketProtocol implements WebSocketProtocol, Serializable {
         return message;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public byte[] handleResponse(AtmosphereResponse res, byte[] message, int offset, int length) {
         // Should never be called
         return message;
     }
 
-    private static ReadableByteChannel newChannel(final String s, final String charset)
-            throws UnsupportedEncodingException {
-        return Channels.newChannel(new ByteArrayInputStream(s.getBytes(charset)));
-    }
 }

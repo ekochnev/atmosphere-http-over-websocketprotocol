@@ -46,13 +46,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This is simple implementation of WebSocketProtocol.
+ * The protocol is simple http tunneling over web socket using RAW approach.
+ * (RAW means that http request passed as string which formed by HTTP standard)
+ *
+ * todo under developing and testing still
+ * @author Evgeny Kochnev
+ */
 public class RawWebSocketProtocol implements WebSocketProtocol, Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(RawWebSocketProtocol.class);
 
     private String contentType;
     private String methodType;
-    private String delimiter = "@@";
+    private String delimiter;
     private boolean destroyable;
 
     /**
@@ -74,7 +82,7 @@ public class RawWebSocketProtocol implements WebSocketProtocol, Serializable {
 
         String delimiter = config.getInitParameter(ApplicationConfig.WEBSOCKET_PATH_DELIMITER);
         if (delimiter == null) {
-            delimiter = "@@";
+            delimiter = "";
         }
         this.delimiter = delimiter;
 
@@ -87,12 +95,15 @@ public class RawWebSocketProtocol implements WebSocketProtocol, Serializable {
     }
 
     /**
+     * Since protocol is simple http tunneling over web socket using RAW approach it parses web socket body as string which represents http request by HTTP standard.
+     * It takes all parameters from passed http request and takes some parameters (like Cookies, Content Type and etc) from initial http request if
+     * they are missing in the passed http request. On the client side is supposed that it will take passed parameters and missing parameters from
+     * browser context during form http request (like Accept-Charset, Accept-Encoding, User-Agent and etc).
      * {@inheritDoc}
      */
     @Override
     public List<AtmosphereRequest> onMessage(WebSocket webSocket, String d) {
 
-        // ######################
         HttpRequest request = null;
         try {
             HttpParams params = new BasicHttpParams();
@@ -115,27 +126,33 @@ public class RawWebSocketProtocol implements WebSocketProtocol, Serializable {
         }
         AtmosphereRequest initialRequest = resource.getRequest();
 
-        // ######################
         Map<String,Object> attributesMap = new HashMap<String, Object>();
         attributesMap.put(FrameworkConfig.WEBSOCKET_SUBPROTOCOL, FrameworkConfig.SIMPLE_HTTP_OVER_WEBSOCKET);
 
         // Propagate the original attribute to WebSocket message.
         attributesMap.putAll(initialRequest.attributes());
 
-        // ######################
+        // Determine value of path info, request URI
         String pathInfo = request.getRequestLine().getUri();
         UriBuilder pathInfoUriBuilder = UriBuilder.fromUri(pathInfo);
         URI pathInfoUri = pathInfoUriBuilder.build();
         String requestURI = pathInfoUri.getPath();
 
+        // take the Method Type of passed http request
         methodType = request.getRequestLine().getMethod();
+
+        // take the Content Type of passed http request
         contentType = request.getFirstHeader(HttpHeaders.CONTENT_TYPE) != null ?
                 request.getFirstHeader(HttpHeaders.CONTENT_TYPE).getValue() :
                 initialRequest.getContentType();
 
-        // ######################
+        // take the body of passed http request
+        String body = null; // TODO how we can take it?
+
         // We need to create a new AtmosphereRequest as WebSocket message may arrive concurrently on the same connection.
         AtmosphereRequest atmosphereRequest = new AtmosphereRequest.Builder()
+                // use HttpServletRequestWrapper to propagate passed http request parameters, headers, cookies and etc.
+                // if some parameters (headers, cookies and etc) takes from initial request if they are missing.
                 .request(new HttpServletRequestWrapper(initialRequest, request))
 
                 .method(methodType)

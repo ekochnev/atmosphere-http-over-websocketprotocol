@@ -18,6 +18,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 @Produces("text/html;charset=ISO-8859-1")
@@ -448,6 +450,18 @@ public class TicTacToeGame {
         }
 
         game.turn(cell);
+
+        String body = "";
+        try {
+            BufferedReader br = atmosphereResource.getRequest().getReader();
+            String part = "";
+
+            while ((part = br.readLine()) != null) { // while loop begins here
+                body = body + part;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         Gson gson = new Gson();
         String json = gson.toJson(game);
