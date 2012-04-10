@@ -1,9 +1,7 @@
 
 The main idea of this project is:
 
-Since there are not any standards how to use Web Socket in exist Java Web Frameworks still
-I got an idea to propagate http request over web socket to have a ability to integrate it
-with exist web frameworks based on http interaction.
+Since there are not any standards how to use Web Socket in exist Java Web Frameworks still I got an idea to propagate http request over web socket to have a ability to integrate it with exist web frameworks based on http interaction.
 Especially this project implements integration for the Atmosphere Framework with REST (Jersey).
 
 Now there are two implementation of the WebSocketProtocol:
